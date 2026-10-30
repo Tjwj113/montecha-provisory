@@ -1,0 +1,598 @@
+/* ==========================================================
+   Montechã Alimentos — estilos
+   Cores e fontes ficam todas aqui em cima, em variáveis.
+   ========================================================== */
+
+/* Fontes do Guia de Marca (versão de maio/2026):
+   - Congenial Bold: só no desenho da logo (não é usada como texto no site);
+   - KitRounded Bold (secundária) = --f-marca: títulos, menu, botões, rótulos em caixa alta
+     (eco do "ALIMENTOS" da logo) e nomes em cartões;
+   - Helvetica (auxiliar) = --f-texto: tudo o que é leitura (parágrafos, descrições, rodapé).
+   As fontes entram pelo Adobe Fonts (Projeto Web "pif5azx", conta do marketing), que é o uso
+   licenciado delas em site: <link ... use.typekit.net/pif5azx.css> no <head> das páginas.
+   Nomes das famílias no kit: "kit-rounded" e "helvetica-neue-lt-pro".
+   Nunca coloque arquivos de fonte (.otf/.ttf) no site: ficariam públicos para download.
+   Sem o kit: Helvetica do aparelho (iPhone/Mac) ou Arial (Windows/Android). */
+
+:root {
+  --rosa: #CE2A4E;          /* botões principais e destaques */
+  --rosa-escuro: #B01F40;   /* botão ao passar o mouse */
+  --rosa-claro: #F6D3D8;    /* círculo atrás do mascote */
+  --vinho: #6B263B;         /* títulos, faixas */
+  --vinho-escuro: #521C2D;
+  --creme: #F7EFE8;         /* fundo principal */
+  --creme-2: #EFE3D8;       /* fundo alternado */
+  --cartao: #F8F5F1;        /* mesma cor do fundo das fotos dos produtos */
+  --defumado: #1E1517;      /* seção do defumador e rodapé */
+  --crosta: #B8692E;        /* detalhes (cor da casca do bacon) */
+  --crosta-texto: #8C4A1D;  /* versão escura para texto pequeno em fundo claro */
+  --crosta-clara: #D08A4E;  /* versão clara para texto pequeno em fundo escuro */
+  --texto: #3A2A2E;
+  --texto-suave: #6B585D;
+
+  --f-marca: "kit-rounded", "KitRounded", "Helvetica Neue", Helvetica, Arial, sans-serif;   /* secundária do guia */
+  --f-texto: "helvetica-neue-lt-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;     /* auxiliar do guia */
+
+  --largura: 1200px;
+  --borda: 24px;
+  --sombra: 0 18px 40px -18px rgba(58, 20, 32, .35);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+section[id] { scroll-margin-top: calc(48px * 1.7 + 24px); }   /* altura da barra compacta fixa + folga */
+body {
+  margin: 0;
+  background: var(--creme);
+  color: var(--texto);
+  font-family: var(--f-texto);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3 {
+  font-family: var(--f-marca);
+  color: var(--vinho);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0 0 .5em;
+  text-wrap: balance;
+}
+h2 { font-size: clamp(2rem, 4.2vw, 3.2rem); font-weight: 700; }
+h3 { font-size: 1.3rem; font-weight: 700; }
+p { margin: 0 0 1em; text-wrap: pretty; }
+
+:focus-visible { outline: 3px solid var(--rosa); outline-offset: 3px; border-radius: 6px; }
+.pular { position: absolute; left: -999px; top: 8px; background: var(--vinho); color: #fff; padding: 10px 16px; border-radius: 8px; z-index: 100; }
+.pular:focus { left: 16px; }
+.so-leitor { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.conteiner { width: min(100% - 40px, var(--largura)); margin-inline: auto; }
+.secao { padding: clamp(48px, 6vw, 72px) 0; }        /* espaço entre seções (igual no site todo) */
+.chamada {                                   /* texto pequeno acima dos títulos */
+  display: inline-block;
+  font-weight: 700;
+  font-size: .8rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--crosta-texto);
+  margin-bottom: 14px;
+}
+.cursiva {                                   /* destaque em vermelho-rosa dentro do título */
+  font-family: var(--f-marca);
+  font-weight: 700;
+  color: var(--rosa);
+  letter-spacing: 0;
+}
+
+/* KitRounded também na interface e nos rótulos (combinação "B" do estudo de fontes) */
+.chamada, .etapa-num, .produto-familia, .troca-rotulo, .rodape .rodape-titulo, .whats-flutuante small,
+.foto-rascunho .rascunho-aviso, .menu-links a, .balao, .selo { font-family: var(--f-marca); }
+
+/* ---------- Botões ---------- */
+.botao {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--f-marca);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  transition: background-color .2s, transform .2s;
+}
+.botao:hover { transform: translateY(-1px); }
+@media (max-width: 420px) { .botao { text-align: center; } .botao-principal { padding: 14px 20px; } }
+.botao svg { width: 1.2em; height: 1.2em; flex: none; }
+.botao-principal {                           /* texto ≥ 19px em negrito: contraste ok */
+  background: var(--rosa); color: #fff;
+  font-size: 1.2rem; padding: 16px 28px;
+  box-shadow: 0 10px 24px -10px rgba(206, 42, 78, .7);
+}
+.botao-principal:hover { background: var(--rosa-escuro); }
+.botao-vinho { background: var(--vinho); color: #fff; font-size: 1rem; padding: 12px 20px; }
+.botao-vinho:hover { background: var(--vinho-escuro); }
+.botao-creme { background: var(--creme); color: var(--vinho); font-size: 1.05rem; padding: 14px 24px; }
+.botao-creme:hover { background: #fff; }
+.botao-contorno { background: transparent; color: var(--vinho); border: 2px solid rgba(107, 38, 59, .35); font-size: 1rem; padding: 10px 18px; }
+.botao-contorno:hover { border-color: var(--vinho); }
+
+/* ---------- Menu ----------
+   Regras do Guia de Marca (docs/Marca):
+   - logo horizontal com no mínimo 370px de largura (85px de altura);
+   - área de respiro "x" em volta da logo = altura do "M" do símbolo = 34% da altura da logo.
+     Nada (borda, link, botão) entra nesse espaço. O canto arredondado da barra
+     pode ter no máximo raio x para não invadir o respiro.
+   - no celular a logo inteira não cabe: entra só o símbolo, que o guia permite usar sozinho. */
+:root {
+  --logo-h: 86px;                          /* 86px de altura = 373px de largura (mínimo do guia: 370px) */
+  --logo-x: calc(var(--logo-h) * .35);     /* respiro x (no guia, 34% da altura; arredondado para cima) */
+  --menu-topo: 14px;                       /* distância da barra até o topo da tela */
+  --menu-alt: calc(var(--logo-h) + 2 * var(--logo-x));   /* altura da barra */
+}
+@media (max-width: 600px) { :root { --logo-h: 48px; } }
+
+/* No topo da página a barra grande rola junto com o conteúdo. Ao passar dela, desce do topo
+   uma barra compacta fixa, com o símbolo (js/site.js coloca a classe .compacto). */
+.menu {
+  position: absolute; top: var(--menu-topo); left: 0; right: 0; z-index: 50;
+  pointer-events: none;
+}
+.menu.compacto {
+  position: fixed; top: 0;
+  --logo-h: 48px; --logo-x: calc(var(--logo-h) * .35);     /* símbolo de 48px com o mesmo respiro x */
+  pointer-events: auto;
+  background: rgba(247, 239, 232, .96);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  box-shadow: 0 6px 24px -12px rgba(30, 21, 23, .45);
+  animation: menu-descer .3s ease both;
+}
+.menu.compacto .menu-barra { background: none; box-shadow: none; border-radius: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.menu.compacto .menu-logo .logo-inteira { display: none; }
+.menu.compacto .menu-logo .logo-simbolo { display: block; }
+@keyframes menu-descer { from { transform: translateY(-100%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .menu.compacto { animation: none; } }
+.menu-barra {
+  pointer-events: auto;
+  display: flex; align-items: center; gap: 24px;
+  background: rgba(247, 239, 232, .92);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border-radius: min(24px, var(--logo-x));
+  padding: var(--logo-x) var(--logo-x) var(--logo-x) var(--logo-x);
+  box-shadow: 0 8px 30px -16px rgba(30, 21, 23, .5);
+  position: relative;
+}
+.menu-logo { display: block; flex: none; margin-right: var(--logo-x); border-radius: 8px; }
+.menu-logo img { display: block; height: var(--logo-h); width: auto; }
+.menu-logo .logo-simbolo { display: none; }
+@media (max-width: 600px) {
+  .menu-logo .logo-inteira { display: none; }
+  .menu-logo .logo-simbolo { display: block; }
+}
+.menu-links { display: flex; gap: 22px; margin-left: auto; list-style: none; padding: 0; margin-block: 0; }
+.menu-links a { text-decoration: none; font-weight: 700; color: var(--vinho); font-size: .98rem; }
+.menu-links a:hover { color: var(--rosa); }
+/* Produtos é o botão em destaque do menu */
+.menu .menu-destaque { padding: 12px 26px; font-size: 1.02rem; }
+.menu-links .so-celular { display: none; }   /* "Produtos" só entra na lista do celular */
+
+/* Botão de três risquinhos (só em telas menores) */
+.menu-abrir {
+  display: none; flex: none; width: 46px; height: 46px; border-radius: 50%;
+  flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  background: transparent; border: 2px solid rgba(107, 38, 59, .25); cursor: pointer; padding: 0;
+}
+.menu-abrir span { display: block; width: 18px; height: 2px; border-radius: 2px; background: var(--vinho); transition: transform .25s, opacity .2s; }
+.menu.aberto .menu-abrir span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu.aberto .menu-abrir span:nth-child(2) { opacity: 0; }
+.menu.aberto .menu-abrir span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Abaixo de 1100px a logo de 370px + links não cabem: links vão para o botão de menu */
+@media (max-width: 1100px) {
+  .menu-barra { gap: 10px; }
+  .menu .menu-destaque { display: none; }      /* no celular, só o ícone de menu */
+  .menu-links .so-celular { display: block; }
+  .menu-abrir { display: inline-flex; margin-left: auto; }
+  /* As opções descem num cartão abaixo da barra */
+  .menu-links {
+    position: absolute; top: calc(100% + 8px); left: 0; right: 0; margin: 0;
+    flex-direction: column; gap: 2px; padding: 8px;
+    background: var(--creme); border: 2px solid var(--rosa); border-radius: 24px;
+    box-shadow: 0 18px 40px -14px rgba(30, 21, 23, .45);
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: opacity .2s, transform .25s, visibility .25s;
+  }
+  .menu.aberto .menu-links { opacity: 1; visibility: visible; transform: none; }
+  .menu-links a { display: block; padding: 14px 16px; font-size: 1.08rem; border-radius: 16px; }
+  .menu-links a:hover { background: rgba(206, 42, 78, .08); }
+}
+
+/* ---------- 1. Topo ---------- */
+.topo { min-height: 100svh; display: flex; align-items: center; padding: calc(var(--menu-topo) + var(--menu-alt) + 32px) 0 60px; overflow: hidden; }
+.topo-grade { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; }
+.topo h1 {
+  font-size: clamp(2.8rem, 6.6vw, 5.7rem);
+  font-weight: 700;
+  line-height: .98;
+}
+.topo h1 .cursiva { display: inline-block; }
+.topo-apoio { font-size: clamp(1.1rem, 1.6vw, 1.3rem); max-width: 36ch; color: var(--texto-suave); margin: 22px 0 32px; }
+.topo-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 26px; }
+.selo { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; color: var(--vinho); }
+.selo svg { width: 30px; height: 30px; color: var(--crosta); }
+.topo-mascote { position: relative; justify-self: center; width: min(100%, 520px); }
+.topo-mascote::before {
+  content: ""; position: absolute; inset: 8% 0 4% 4%;
+  background: var(--rosa-claro); border-radius: 50%;
+}
+.topo-mascote img { position: relative; width: 100%; height: auto; }
+.balao {
+  position: absolute; top: 4%; left: -6%;
+  background: #fff; color: var(--vinho); font-weight: 700;
+  padding: 10px 16px; border-radius: 18px 18px 18px 4px;
+  box-shadow: var(--sombra);
+}
+@media (max-width: 860px) {
+  .topo-grade { grid-template-columns: 1fr; }
+  .topo-mascote { width: min(78%, 380px); order: -1; }
+}
+
+/* ---------- 2. Faixa Matoso Alimentos → Montechã Alimentos ---------- */
+.faixa-marca {
+  position: relative; z-index: 2;
+  background: var(--vinho); color: var(--creme);
+  padding: 42px 0 74px;
+  border-bottom-left-radius: 50% 56px;
+  border-bottom-right-radius: 50% 56px;
+}
+.faixa-grade { display: grid; grid-template-columns: auto 1fr; gap: 24px 52px; align-items: center; }
+/* Antes e Agora montados iguais: rótulo em cima, logo embaixo, seta entre as logos */
+.troca {
+  display: grid; align-items: center; column-gap: 20px; row-gap: 8px;
+  grid-template-columns: auto auto auto;
+  grid-template-areas: "r-antes . r-agora" "matoso seta montecha";
+}
+.troca-rotulo { font-weight: 700; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--rosa-claro); opacity: .85; }
+.troca-rotulo-antes { grid-area: r-antes; }
+.troca-rotulo-agora { grid-area: r-agora; }
+.troca-matoso { grid-area: matoso; display: block; height: 58px; width: auto; }
+.troca-montecha { grid-area: montecha; display: block; width: 250px; height: auto; }   /* mínimo do guia para a logo vertical */
+.troca-seta { grid-area: seta; width: 34px; height: 34px; color: var(--rosa-claro); }
+.faixa-marca h2 { color: #fff; font-size: clamp(1.8rem, 3.4vw, 2.6rem); margin-bottom: .3em; }
+.faixa-marca p { margin: 0; max-width: 56ch; opacity: .92; }
+/* Celular: a logo de 250px não cabe ao lado da Matoso, então Antes fica em cima e Agora embaixo */
+@media (max-width: 520px) {
+  .troca {
+    grid-template-columns: auto; justify-items: start; row-gap: 10px;
+    grid-template-areas: "r-antes" "matoso" "seta" "r-agora" "montecha";
+  }
+  .troca-seta { transform: rotate(90deg); }
+}
+@media (max-width: 760px) {
+  .faixa-grade { grid-template-columns: 1fr; }
+  .faixa-marca { padding: 34px 0 60px; border-bottom-left-radius: 50% 40px; border-bottom-right-radius: 50% 40px; }
+  .troca { column-gap: 14px; }
+  .troca-matoso { height: 46px; }
+  .troca-seta { width: 28px; height: 28px; }
+}
+
+/* ---------- 3. Defumador (vídeo no scroll) ---------- */
+.defumador { background: var(--defumado); color: var(--creme); margin-top: -70px; }
+.defumador-intro { padding: 160px 0 56px; text-align: center; }
+.defumador-intro .chamada { color: var(--crosta-clara); }
+.defumador-intro h2 { color: #fff; }
+.defumador-intro p { color: rgba(247, 239, 232, .8); max-width: 48ch; margin-inline: auto; }
+.historia { height: 1300vh; position: relative; }   /* mais altura = animação mais lenta */
+.fixo { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }  /* svh: não fica atrás da barra do navegador no celular */
+.fixo canvas { width: 100%; height: 100%; object-fit: cover; display: block; transform-origin: 50% 40%; }
+.fixo::after {                                     /* sombra embaixo para o texto aparecer */
+  content: ""; position: absolute; inset: auto 0 0 0; height: 45%;
+  background: linear-gradient(to top, rgba(30, 21, 23, .85), transparent);
+  pointer-events: none;
+}
+.etapa {
+  position: absolute; z-index: 2; left: max(20px, 6vw); bottom: 11svh; max-width: 520px; margin: 0;
+  opacity: 0; transform: translateY(18px); transition: opacity .5s, transform .5s;
+}
+.etapa.ativa { opacity: 1; transform: none; }
+.etapa-num { display: block; font-weight: 700; font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--crosta-clara); margin-bottom: 8px; }
+.ilustrativo {
+  position: absolute; z-index: 2; right: max(20px, 4vw); bottom: 3svh;
+  font-size: .72rem; font-weight: 700; letter-spacing: .06em; color: rgba(247, 239, 232, .7);
+}
+@media (max-width: 600px) { .ilustrativo { right: auto; left: 20px; } }
+.etapa-titulo { display: block; font-family: var(--f-marca); font-weight: 700; font-size: clamp(2rem, 4.6vw, 3.6rem); line-height: 1; color: #fff; }
+.etapa-texto { display: block; margin-top: 12px; font-size: 1.1rem; color: rgba(247, 239, 232, .88); max-width: 40ch; }
+.etapas-fixas { display: none; }
+
+/* ---------- 4. Catálogo (sobe por cima do vídeo) ---------- */
+.catalogo {
+  position: relative; z-index: 3;
+  margin-top: -100vh;                     /* entra por cima do vídeo parado */
+  margin-top: -100svh;
+  background: var(--creme);
+  border-radius: 40px 40px 0 0;
+  box-shadow: 0 -30px 60px rgba(0, 0, 0, .35);
+}
+.catalogo-topo { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 20px 40px; margin-bottom: 28px; }
+.catalogo-topo p { max-width: 44ch; color: var(--texto-suave); margin: 0; }
+.filtros { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 34px; }
+.filtro {
+  font: inherit; font-family: var(--f-marca); font-weight: 700; font-size: .95rem;
+  padding: 10px 18px; border-radius: 999px; cursor: pointer;
+  background: transparent; color: var(--vinho); border: 2px solid rgba(107, 38, 59, .25);
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.filtro:hover { border-color: var(--vinho); }
+.filtro[aria-pressed="true"] { background: var(--vinho); color: #fff; border-color: var(--vinho); }
+.filtro span { opacity: .65; font-weight: 700; margin-left: 4px; }
+.grade-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 22px; }
+.produto {
+  display: flex; flex-direction: column;
+  background: #fff; border-radius: var(--borda); overflow: hidden;
+  border: 1px solid rgba(107, 38, 59, .08);
+  transition: box-shadow .25s, transform .25s;
+}
+.produto[hidden] { display: none; }
+/* Depois de aparecer na tela, o cartão volta a ter transição rápida (para o efeito de "levantar") */
+.js-anima .produto.revelar.visivel { transition: opacity .7s ease, transform .3s ease, box-shadow .3s ease; }
+.produto-foto { position: relative; margin: 0; aspect-ratio: 4 / 5; background: var(--cartao); }
+.produto-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .45s, transform .6s; }
+.produto-foto .aberto { opacity: 0; transform: scale(1.04); }
+.produto-foto.mostrar .aberto { opacity: 1; transform: none; }
+.produto-foto.mostrar .embalagem { opacity: 0; }
+/* Efeitos de "passar o mouse" só em aparelhos com mouse (no celular o toque fica "preso") */
+@media (hover: hover) {
+  .produto:hover, .js-anima .produto.revelar.visivel:hover { box-shadow: var(--sombra); transform: translateY(-3px); }
+  .produto:hover .aberto { opacity: 1; transform: none; }
+  .produto:hover .embalagem { opacity: 0; }
+}
+.ver-aberto {
+  position: absolute; left: 12px; bottom: 12px;
+  font: inherit; font-family: var(--f-marca); font-size: .78rem; font-weight: 700; letter-spacing: .04em;
+  background: rgba(255, 255, 255, .92); color: var(--vinho);
+  border: 0; border-radius: 999px; padding: 7px 12px; cursor: pointer;
+}
+.produto-corpo { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
+.produto-familia { font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--crosta-texto); margin-bottom: 6px; }
+.produto h3 { margin-bottom: 8px; }
+.produto-desc { font-size: .95rem; color: var(--texto-suave); margin-bottom: 14px; }
+.formatos { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0 0 18px; }
+.formatos li { font-size: .82rem; font-weight: 700; color: var(--crosta-texto); border: 1.5px solid rgba(184, 105, 46, .45); border-radius: 999px; padding: 3px 10px; }
+.produto .botao-vinho { margin-top: auto; width: 100%; }
+
+/* ---------- 5. Na cozinha do seu cliente (rascunho) ---------- */
+.cozinha { background: var(--creme-2); }
+.grade-cozinha { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin-top: 36px; }
+.foto-rascunho {
+  margin: 0; aspect-ratio: 3 / 4; border-radius: var(--borda);
+  border: 2px dashed rgba(107, 38, 59, .35);
+  background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, .5) 0 14px, transparent 14px 28px);
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 18px;
+}
+.foto-rascunho strong { font-family: var(--f-marca); font-size: 1.25rem; color: var(--vinho); line-height: 1.1; }
+.foto-rascunho span { font-size: .88rem; color: var(--texto-suave); }
+.foto-rascunho .rascunho-aviso { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--vinho); margin-bottom: auto; }
+@media (max-width: 900px) { .grade-cozinha { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.foto-rascunho strong, .foto-rascunho span { overflow-wrap: anywhere; hyphens: auto; }
+
+/* ---------- 6 e 8. Seções com foto + texto ---------- */
+.dupla { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.dupla-foto { margin: 0; border-radius: 32px; overflow: hidden; box-shadow: var(--sombra); }
+.dupla-foto img { width: 100%; height: auto; }
+@media (max-width: 860px) { .dupla { grid-template-columns: 1fr; } }
+
+.motivos { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 22px; }
+.motivos li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; }
+.motivos svg { width: 44px; height: 44px; padding: 10px; border-radius: 50%; background: var(--rosa-claro); color: var(--vinho); }
+.motivos strong { display: block; font-family: var(--f-marca); font-size: 1.25rem; color: var(--vinho); line-height: 1.2; margin-bottom: 2px; }
+.motivos p { margin: 0; color: var(--texto-suave); }
+
+/* ---------- 7. Para quem ---------- */
+.para-quem { background: var(--creme-2); }
+.grade-publico { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 36px; }
+.publico { border-radius: 32px; padding: clamp(28px, 4vw, 44px); display: flex; flex-direction: column; align-items: flex-start; }
+.publico .chamada { margin-bottom: 10px; }
+.publico h3 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
+.publico p { flex: 1; margin-bottom: 26px; }
+.publico-revenda { background: var(--vinho); color: var(--creme); }
+.publico-revenda h3 { color: #fff; }
+.publico-revenda .chamada { color: var(--rosa-claro); }
+.publico-food { background: #fff; }
+@media (max-width: 760px) { .grade-publico { grid-template-columns: 1fr; } }
+
+/* ---------- 8. Como pedir ---------- */
+.passos { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: passo; display: grid; gap: 26px; }
+.passos li { counter-increment: passo; display: grid; grid-template-columns: 52px 1fr; gap: 16px; align-items: start; }
+.passos li::before {
+  content: counter(passo);
+  width: 52px; height: 52px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--vinho); color: #fff;
+  font-family: var(--f-marca); font-weight: 700; font-size: 1.4rem;
+}
+.passos strong { display: block; font-family: var(--f-marca); font-size: 1.4rem; color: var(--vinho); line-height: 1.2; margin-bottom: 2px; }
+.passos p { margin: 0; color: var(--texto-suave); font-size: 1.05rem; }
+
+/* ---------- 9. Perguntas ---------- */
+.perguntas .conteiner { max-width: 820px; }
+.faq { border-top: 1px solid rgba(107, 38, 59, .18); }
+.faq details { border-bottom: 1px solid rgba(107, 38, 59, .18); }
+.faq summary {
+  cursor: pointer; list-style: none;
+  display: flex; justify-content: space-between; align-items: center; gap: 20px;
+  padding: 22px 4px;
+  font-family: var(--f-marca); font-weight: 700; font-size: 1.2rem; color: var(--vinho);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--f-texto); font-size: 1.6rem; font-weight: 400; color: var(--rosa); transition: transform .25s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding: 0 4px 22px; margin: 0; color: var(--texto-suave); max-width: 64ch; }
+
+/* ---------- 10. Rodapé ---------- */
+.rodape { background: var(--defumado); color: rgba(247, 239, 232, .85); padding: 48px 0 28px; }
+.rodape-grade { display: grid; grid-template-columns: minmax(250px, .9fr) 1fr 1.1fr 1.25fr;   /* 1ª coluna nunca menor que a logo (250px) */ gap: 28px 40px; align-items: start; }
+/* Logo vertical: mínimo de 250px de largura pelo Guia de Marca; respiro x abaixo dela */
+.rodape .rodape-logo { width: 250px; max-width: none; height: auto; margin: 0 0 28px; }
+.rodape .rodape-titulo {
+  display: flex; align-items: baseline; gap: 10px;
+  color: #fff; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700;
+  margin: 0 0 14px; line-height: 1.2;
+}
+.rodape-nota { font-family: var(--f-texto); font-size: .74rem; letter-spacing: .02em; text-transform: none; font-weight: 400; color: rgba(247, 239, 232, .55); }
+.rodape p { margin: 0; font-size: .93rem; line-height: 1.75; }
+
+/* Todas as linhas do rodapé com a mesma altura, para alinhar entre colunas */
+.rodape-endereco, .rodape-lista { font-style: normal; font-size: .93rem; line-height: 1.75; margin: 0; }
+.rodape-endereco { display: flex; flex-direction: column; align-items: flex-start; }
+.rodape-lista { display: grid; grid-template-columns: 5.75rem minmax(0, 1fr); align-items: baseline; }
+.rodape-lista dt { font-size: .82rem; color: rgba(247, 239, 232, .55); }
+.rodape-lista dd { margin: 0; min-width: 0; }
+/* Celular: área de toque maior nos telefones e e-mails do rodapé */
+@media (max-width: 760px) {
+  .rodape-lista { line-height: 1.45; }
+  .rodape-lista dd a { display: inline-block; padding-block: 6px; }
+}
+
+/* Links: sublinhado discreto, que fica forte ao passar o mouse */
+.rodape a {
+  color: #fff; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;
+  text-decoration-color: rgba(247, 239, 232, .3); overflow-wrap: anywhere; transition: text-decoration-color .2s, color .2s;
+}
+.rodape a:hover { text-decoration-color: var(--rosa); }
+.rodape-fim { margin-top: 28px; padding-top: 16px; border-top: 1px solid rgba(247, 239, 232, .12); font-size: .82rem; opacity: .7; }
+@media (max-width: 1100px) { .rodape-grade { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) {
+  .rodape-grade { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ---------- WhatsApp flutuante ---------- */
+/* Mesmo modelo dos cartões da Mayara e do Clayton (creme, borda fina, cantos 20px, sombra) */
+.whats-flutuante {
+  position: fixed; right: 18px; bottom: 18px; z-index: 60;
+  display: flex; align-items: center;
+  text-decoration: none;
+  background: var(--creme); border: 2px solid var(--rosa);
+  border-radius: 20px; padding: 8px 18px 8px 8px;
+  box-shadow: 0 18px 40px -14px rgba(30, 21, 23, .45);
+  transition: transform .2s, opacity .3s, visibility .3s;
+}
+.whats-flutuante:hover { transform: translateY(-2px); }
+.whats-flutuante.escondido { opacity: 0; visibility: hidden; transform: translateY(16px); }
+.whats-flutuante img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
+.whats-flutuante > span { margin-left: 12px; display: flex; flex-direction: column; line-height: 1.25; }
+.whats-flutuante small { font-size: .72rem; font-weight: 700; color: var(--rosa-escuro); letter-spacing: .08em; text-transform: uppercase; }
+.whats-flutuante > span > span { font-family: var(--f-marca); font-weight: 700; font-size: 1.12rem; color: var(--vinho); }
+@media (max-width: 600px) {
+  .whats-flutuante { padding: 6px; border-radius: 22px; }
+  .whats-flutuante > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+}
+
+/* Símbolo do WhatsApp ao lado dos números */
+.icone-whats { width: 16px; height: 16px; flex: none; color: #1FAF55; }
+.pendente { font-style: italic; opacity: .6; }
+
+/* ---------- Escolha do vendedor (cartões que sobem acima do botão "Pedidos") ---------- */
+.whats-flutuante.aberto::after {                 /* "×" para fechar */
+  content: "×"; position: absolute; top: -8px; left: -8px;
+  width: 26px; height: 26px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--vinho); color: #fff; font-size: 18px; font-weight: 700; line-height: 1;
+}
+.escolha {
+  position: fixed; right: 18px; bottom: 100px; z-index: 70;
+  width: min(270px, calc(100vw - 24px));
+  display: grid; gap: 8px;
+}
+.escolha[hidden] { display: none; }
+.escolha-titulo {
+  justify-self: end; margin: 0;
+  background: var(--vinho); color: #fff; font-weight: 700; font-size: .85rem;
+  padding: 6px 14px; border-radius: 999px;
+}
+/* Mesmo modelo da caixa do Zé Bacon: creme, contorno rosa, cantos 20px */
+.escolha-cartao {
+  display: flex; flex-direction: column; align-items: flex-start; line-height: 1.3;
+  background: var(--creme); border: 2px solid var(--rosa);
+  border-radius: 18px; padding: 9px 16px 10px;
+  box-shadow: 0 18px 40px -14px rgba(30, 21, 23, .45);
+}
+.escolha-cartao strong { font-family: var(--f-marca); font-size: 1.05rem; color: var(--vinho); }
+.escolha-papel { font-size: .76rem; color: var(--texto-suave); font-weight: 700; }
+/* O número é o link do WhatsApp: muda de cor ao passar o mouse */
+.escolha-numero {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 3px 0 -3px -8px; padding: 3px 8px; border-radius: 8px;
+  font-weight: 700; font-size: .95rem; color: var(--vinho); text-decoration: none;
+  transition: color .2s, background-color .2s;
+}
+.escolha-numero .icone-whats { width: 16px; height: 16px; }
+.escolha-numero:hover, .escolha-numero:focus-visible { color: var(--rosa-escuro); background: rgba(206, 42, 78, .08); }
+.escolha-numero:hover span { text-decoration: underline; text-underline-offset: 3px; }
+/* Animação: sobem um de cada vez, o mais perto do botão primeiro */
+.escolha-titulo, .escolha-cartao {
+  opacity: 0; transform: translateY(22px) scale(.98);
+  transition: opacity .28s ease, transform .38s cubic-bezier(.2, .8, .2, 1);
+}
+.escolha-cartao:last-child { transition-delay: 0s; }
+.escolha-cartao:nth-last-child(2) { transition-delay: .07s; }
+.escolha-titulo { transition-delay: .13s; }
+.escolha.aberta .escolha-titulo, .escolha.aberta .escolha-cartao { opacity: 1; transform: none; }
+@media (max-width: 600px) { .escolha { right: 12px; bottom: 84px; } }
+
+/* ---------- Vitrine da página inicial ---------- */
+.catalogo-mais { display: flex; justify-content: center; margin-top: 34px; }
+.passos-botao { margin-top: 32px; }
+
+/* ---------- Página de produtos ---------- */
+.pagina-topo { padding: calc(var(--menu-topo) + var(--menu-alt) + 32px) 0 8px; }
+.pagina-topo h1 { font-size: clamp(2.4rem, 5.2vw, 4.2rem); font-weight: 700; }
+.pagina-topo p { max-width: 52ch; color: var(--texto-suave); font-size: 1.1rem; }
+.catalogo.catalogo-pagina { margin-top: 0; border-radius: 0; box-shadow: none; padding-top: 36px; }
+.menu-links a[aria-current="page"] { color: var(--rosa); }
+
+/* Seja revendedor */
+.revenda { background: var(--vinho); color: var(--creme); }
+.revenda-grade { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+.revenda .chamada { color: var(--rosa-claro); }
+.revenda h2 { color: #fff; }
+.revenda p { color: rgba(247, 239, 232, .88); max-width: 46ch; }
+.revenda-lista { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 12px; }
+.revenda-lista li { display: flex; gap: 12px; align-items: center; font-weight: 700; }
+.revenda-lista svg { width: 22px; height: 22px; flex: none; color: var(--rosa-claro); }
+.cartao-responsavel {
+  background: rgba(247, 239, 232, .07); border: 1px solid rgba(247, 239, 232, .18);
+  border-radius: 28px; padding: clamp(24px, 3vw, 32px);
+}
+.cartao-responsavel-topo { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+.cartao-responsavel strong { display: block; font-family: var(--f-marca); font-size: 1.7rem; color: #fff; line-height: 1.1; }
+.cartao-responsavel-topo span span { font-size: .9rem; color: var(--rosa-claro); font-weight: 700; }
+.cartao-responsavel dl { display: grid; grid-template-columns: 5.5rem 1fr; gap: 6px 0; margin: 0 0 22px; }
+.cartao-responsavel dt { color: rgba(247, 239, 232, .6); font-size: .9rem; }
+.cartao-responsavel dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; }
+.cartao-responsavel dd a { color: #fff; text-decoration-color: rgba(247, 239, 232, .35); text-underline-offset: 4px; }
+.cartao-responsavel-acoes { display: flex; flex-wrap: wrap; gap: 10px; }
+.revenda .botao-contorno { color: var(--creme); border-color: rgba(247, 239, 232, .4); }
+.revenda .botao-contorno:hover { border-color: var(--creme); }
+@media (max-width: 860px) { .revenda-grade { grid-template-columns: 1fr; } }
+
+/* ---------- Entrada suave dos blocos ---------- */
+.js-anima .revelar { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+.js-anima .revelar.visivel { opacity: 1; transform: none; }
+
+/* ---------- Sem animação (preferência do sistema) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+.sem-movimento .historia { height: auto; }
+.sem-movimento .fixo { display: none; }
+.sem-movimento .catalogo { margin-top: 0; }
+.sem-movimento .etapas-fixas {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px;
+  list-style: none; padding: 0 0 100px; margin: 0;
+}
+.etapas-fixas img { width: 100%; height: auto; border-radius: 18px; aspect-ratio: 16 / 9; object-fit: cover; margin-bottom: 12px; }
+.etapas-fixas strong { display: block; font-family: var(--f-marca); font-size: 1.3rem; color: #fff; }
+.etapas-fixas span { color: rgba(247, 239, 232, .8); font-size: .95rem; }

@@ -1,0 +1,29 @@
+# O que fica FORA do repositório (o GitHub Pages grátis exige repositório público,
+# então tudo que subir fica visível para qualquer pessoa).
+
+# Material interno de trabalho: guia de marca, arquivos da agência (.ai/.eps),
+# fontes de consulta, prompts e anotações. Só no computador, não vai para o site.
+docs/
+
+# Arquivos de fonte nunca vão para o site: as fontes entram pelo Adobe Fonts
+# (kit pif5azx, ver topo de css/estilo.css). Vale para qualquer pasta.
+*.otf
+*.ttf
+*.woff
+*.woff2
+
+# Pacotes compactados e arquivos de design soltos
+*.zip
+*.rar
+*.ai
+*.eps
+*.psd
+
+# Configuração local do Claude (servidor de visualização)
+.claude/
+
+# Lixo do sistema (Mac e Windows)
+__MACOSX/
+.DS_Store
+Thumbs.db
+desktop.ini
