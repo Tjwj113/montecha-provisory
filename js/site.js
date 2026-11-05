@@ -11,7 +11,7 @@ const CONFIG = {
     { nome: 'Clayton', papel: 'Vendas e revenda', numero: '5537991690232', telefone: '(37) 9 9169-0232' },
   ],
   // Nome do mascote. Vazio = os textos aparecem sem nome.
-  nomeMascote: 'Zé Bacon',
+  nomeMascote: 'Zé du Bacon',
 };
 
 const SEM_MOVIMENTO = document.documentElement.classList.contains('sem-movimento');

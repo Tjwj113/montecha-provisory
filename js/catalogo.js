@@ -21,7 +21,7 @@ const PRODUTOS = [
   { nome: 'Bacon em Cubos', familia: 'fatiados', foto: 'bacon-cubos-200g', formatos: ['200 g'],
     desc: 'Pronto para usar, direto na panela. Tamanho ideal para a gôndola.' },
   { nome: 'Bacon de Paleta Cozida em Cubos', familia: 'fatiados', foto: 'paleta-cubos-1kg', formatos: ['1 kg'],
-    desc: 'Cubos padronizados que agilizam a cozinha profissional.' },
+    desc: 'Cubos padronizados, prontos para usar.' },
   { nome: 'Bacon de Paleta Cozida Fatiado', familia: 'fatiados', foto: 'paleta-fatiado-1kg', formatos: ['1 kg'],
     desc: 'Fatias prontas para lanches, pizzas e pratos executivos.' },
   { nome: 'Papada Temperada Fatiada', familia: 'fatiados', foto: 'papada-fatiada-1kg', formatos: ['1 kg'],
