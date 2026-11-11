@@ -8,7 +8,7 @@ const CONFIG = {
   // Equipe de vendas (WhatsApp e ligação). Número: DDI + DDD + número, só algarismos.
   vendedores: [
     { nome: 'Mayara',  papel: 'Vendas',           numero: '5537999243262', telefone: '(37) 9 9924-3262' },
-    { nome: 'Clayton', papel: 'Vendas e revenda', numero: '5537991690232', telefone: '(37) 9 9169-0232' },
+    { nome: 'Clayton', papel: 'Gerente Comercial', numero: '5537991690232', telefone: '(37) 9 9169-0232' },
   ],
   // Nome do mascote. Vazio = os textos aparecem sem nome.
   nomeMascote: 'Zé du Bacon',

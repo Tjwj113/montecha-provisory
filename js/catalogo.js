@@ -79,7 +79,7 @@ const PRODUTOS = [
   const contagem = f => PRODUTOS.filter(p => !f || p.familia === f).length;
   const opcoes = [['', 'Todos'], ...Object.entries(FAMILIAS)];
   barraFiltros.innerHTML = opcoes.map(([chave, rotulo]) =>
-    `<button class="filtro" type="button" data-filtro="${chave}" aria-pressed="${chave === ''}">${rotulo}<span>${contagem(chave)}</span></button>`
+    `<button class="filtro" type="button" data-filtro="${chave}" aria-pressed="${chave === ''}">${rotulo}</button>`
   ).join('');
 
   barraFiltros.addEventListener('click', e => {

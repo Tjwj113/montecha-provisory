@@ -91,8 +91,8 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 }
 
 /* KitRounded também na interface e nos rótulos (combinação "B" do estudo de fontes) */
-.chamada, .etapa-num, .produto-familia, .troca-rotulo, .rodape .rodape-titulo, .whats-flutuante small,
-.menu-links a, .balao, .selo { font-family: var(--f-marca); }
+.chamada, .etapa-num, .produto-familia, .rodape .rodape-titulo, .whats-flutuante small,
+.menu-links a, .balao { font-family: var(--f-marca); }
 
 /* ---------- Botões ---------- */
 .botao {
@@ -143,7 +143,9 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 }
 .menu.compacto {
   position: fixed; top: 0;
-  --logo-h: 48px; --logo-x: calc(var(--logo-h) * .35);     /* símbolo de 48px com o mesmo respiro x */
+  /* Barra fixa com a logo inteira no tamanho mínimo do guia (370px) e o mesmo respiro x.
+     No celular (até 600px) continua só o símbolo, porque a logo inteira não cabe. */
+  --logo-x: calc(var(--logo-h) * .35);
   pointer-events: auto;
   background: rgba(247, 239, 232, .96);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
@@ -151,8 +153,6 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   animation: menu-descer .3s ease both;
 }
 .menu.compacto .menu-barra { background: none; box-shadow: none; border-radius: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
-.menu.compacto .menu-logo .logo-inteira { display: none; }
-.menu.compacto .menu-logo .logo-simbolo { display: block; }
 @keyframes menu-descer { from { transform: translateY(-100%); } to { transform: none; } }
 @media (prefers-reduced-motion: reduce) { .menu.compacto { animation: none; } }
 .menu-barra {
@@ -212,6 +212,17 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 
 /* ---------- 1. Topo ---------- */
 .topo { min-height: 100svh; display: flex; align-items: center; padding: calc(var(--menu-topo) + var(--menu-alt) + 32px) 0 60px; overflow: hidden; }
+/* Laterais na cor vinho do Guia de Marca (#6B263B) e o miolo creme, da largura do conteúdo.
+   Embaixo, o vinho das laterais continua na faixa "Matoso → Montechã". */
+@media (min-width: 1300px) {
+  .topo { position: relative; background: var(--vinho); }
+  .topo::before {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 50%;
+    width: calc(var(--largura) + 80px); transform: translateX(-50%);
+    background: var(--creme);
+  }
+  .topo > .conteiner { position: relative; }
+}
 .topo-grade { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; }
 .topo h1 {
   font-size: clamp(2.8rem, 6.6vw, 5.7rem);
@@ -219,10 +230,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   line-height: .98;
 }
 .topo h1 .cursiva { display: inline-block; }
-.topo-apoio { font-size: clamp(1.1rem, 1.6vw, 1.3rem); max-width: 36ch; color: var(--texto-suave); margin: 22px 0 32px; }
-.topo-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 26px; }
-.selo { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; color: var(--vinho); }
-.selo svg { width: 30px; height: 30px; color: var(--crosta); }
+.topo-apoio { font-size: clamp(1.1rem, 1.6vw, 1.3rem); max-width: 36ch; color: var(--texto-suave); margin: 22px 0 0; }
 .topo-mascote { position: relative; justify-self: center; width: min(100%, 520px); }
 .topo-mascote::before {
   content: ""; position: absolute; inset: 8% 0 4% 4%;
@@ -258,39 +266,37 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   border-bottom-right-radius: 50% 56px;
 }
 .faixa-grade { display: grid; grid-template-columns: auto 1fr; gap: 24px 52px; align-items: center; }
-/* Antes e Agora montados iguais: rótulo centralizado em cima, logo embaixo, seta entre as logos.
-   As duas logos têm a mesma largura (250px, o mínimo do guia para a logo vertical da Montechã). */
+/* Logo da Matoso, seta curva e logo da Montechã. A Matoso fica menor (pedido do marketing);
+   a Montechã fica com 250px, o mínimo do guia para a logo vertical. */
 .troca {
   --troca-logo: 250px;
-  display: grid; align-items: center; justify-items: center; column-gap: 20px; row-gap: 10px;
-  grid-template-columns: var(--troca-logo) auto var(--troca-logo);
-  grid-template-areas: "r-antes . r-agora" "matoso seta montecha";
+  display: grid; align-items: center; justify-items: center; column-gap: 18px; row-gap: 10px;
+  grid-template-columns: auto auto var(--troca-logo);
+  grid-template-areas: "matoso seta montecha";
   width: max-content;
 }
-.troca-rotulo { font-weight: 700; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--rosa-claro); opacity: .85; }
-.troca-rotulo-antes { grid-area: r-antes; }
-.troca-rotulo-agora { grid-area: r-agora; }
-.troca-matoso { grid-area: matoso; display: block; width: var(--troca-logo); height: auto; }
+.troca-matoso { grid-area: matoso; display: block; width: 190px; height: auto; }
 .troca-montecha { grid-area: montecha; display: block; width: var(--troca-logo); height: auto; }
-.troca-seta { grid-area: seta; width: 34px; height: 34px; color: var(--rosa-claro); }
+.troca-seta { grid-area: seta; width: 76px; height: auto; color: var(--rosa-claro); }
 .faixa-marca h2 { color: #fff; font-size: clamp(1.8rem, 3.4vw, 2.6rem); margin-bottom: .3em; }
 .faixa-marca p { margin: 0; max-width: 56ch; opacity: .92; }
 /* Abaixo de 1100px as duas logos lado a lado não deixam espaço para o título: o título vai para baixo */
 @media (max-width: 1100px) {
   .faixa-grade { grid-template-columns: 1fr; row-gap: 56px; }   /* respiro da logo antes do título */
 }
-/* Celular: as duas logos não cabem lado a lado, então Antes fica em cima e Agora embaixo */
+/* Celular: as duas logos não cabem lado a lado, então a Matoso fica em cima e a Montechã embaixo */
 @media (max-width: 640px) {
   .troca {
     grid-template-columns: var(--troca-logo); row-gap: 12px;
-    grid-template-areas: "r-antes" "matoso" "seta" "r-agora" "montecha";
+    grid-template-areas: "matoso" "seta" "montecha";
     justify-self: center;   /* logos no meio da tela */
   }
-  .troca-seta { transform: rotate(90deg); }
+  .troca-matoso { width: 170px; }
+  .troca-seta { transform: rotate(90deg) scaleY(-1); }   /* a curva continua "abrindo" para o lado */
 }
 @media (max-width: 760px) {
   .faixa-marca { padding: 34px 0 60px; border-bottom-left-radius: 50% 40px; border-bottom-right-radius: 50% 40px; }
-  .troca-seta { width: 28px; height: 28px; }
+  .troca-seta { width: 44px; }
 }
 
 /* ---------- 3. Defumador (vídeo no scroll) ---------- */
@@ -312,7 +318,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   opacity: 0; transform: translateY(18px); transition: opacity .5s, transform .5s;
 }
 .etapa.ativa { opacity: 1; transform: none; }
-.etapa-num { display: block; font-weight: 700; font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--crosta-clara); margin-bottom: 8px; }
+.etapa-num { display: block; font-weight: 700; font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--crosta-clara); margin-bottom: 16px; }
 .ilustrativo {
   position: absolute; z-index: 2; right: max(20px, 4vw); bottom: 3svh;
   font-size: .78rem; font-weight: 700; letter-spacing: .06em; color: rgba(247, 239, 232, .7);
@@ -330,9 +336,15 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   background: var(--creme);
   border-radius: 40px 40px 0 0;
   box-shadow: 0 -30px 60px rgba(0, 0, 0, .35);
+  /* Pelo menos a altura da tela: em telas altas a vitrine era mais baixa que a tela e o quadro
+     fixo da animação aparecia embaixo dela, por cima do título "Por que revender". */
+  min-height: 100vh; min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
 }
-.catalogo-topo { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 20px 40px; margin-bottom: 28px; }
-.catalogo-topo p { max-width: 44ch; color: var(--texto-suave); margin: 0; }
+.catalogo-topo { margin-bottom: 28px; }
+.catalogo-topo h2 { margin-bottom: .2em; }
+/* Frase de ajuda abaixo do título: uma linha só, letra menor (igual nas duas páginas) */
+.dica { font-size: .95rem; color: var(--texto-suave); margin: 0; }
 .filtros { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 34px; }
 .filtro {
   font: inherit; font-family: var(--f-marca); font-weight: 700; font-size: .95rem;
@@ -342,7 +354,6 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 }
 .filtro:hover { border-color: var(--vinho); }
 .filtro[aria-pressed="true"] { background: var(--vinho); color: #fff; border-color: var(--vinho); }
-.filtro span { opacity: .82; font-weight: 700; margin-left: 4px; }
 .grade-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 22px; }
 .produto {
   display: flex; flex-direction: column;
@@ -406,20 +417,6 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 @media (max-width: 860px) { .para-quem-grade { grid-template-columns: 1fr; } }
 @media (max-width: 380px) { .clientes li { padding: 20px 12px; font-size: 1.1rem; } }
 
-/* ---------- Como fazer seu pedido (página de produtos) ---------- */
-.passos { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: passo; display: grid; gap: 26px; }
-.passos li { counter-increment: passo; display: grid; grid-template-columns: 52px 1fr; gap: 16px; align-items: start; }
-.passos li::before {
-  content: counter(passo);
-  width: 52px; height: 52px; border-radius: 50%;
-  display: grid; place-items: center;
-  background: var(--vinho); color: #fff;
-  font-family: var(--f-marca); font-weight: 700; font-size: 1.4rem;
-  padding-top: calc(var(--kit-desce) * 2);   /* centraliza o número no círculo */
-}
-.passos strong { display: block; font-family: var(--f-marca); font-size: 1.4rem; color: var(--vinho); line-height: 1.2; margin-bottom: 2px; }
-.passos p { margin: 0; color: var(--texto-suave); font-size: 1.05rem; }
-
 /* ---------- 9. Perguntas ---------- */
 .perguntas .conteiner { max-width: 820px; }
 .faq { border-top: 1px solid rgba(107, 38, 59, .18); }
@@ -436,8 +433,9 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .faq details p { padding: 0 4px 22px; margin: 0; color: var(--texto-suave); max-width: 64ch; }
 
 /* ---------- 10. Rodapé ---------- */
-.rodape { background: var(--defumado); color: rgba(247, 239, 232, .85); padding: 48px 0 28px; }
-.rodape-grade { display: grid; grid-template-columns: minmax(250px, .9fr) 1fr 1.1fr 1.25fr;   /* 1ª coluna nunca menor que a logo (250px) */ gap: 28px 40px; align-items: start; }
+/* Vinho do guia no lugar do preto; a linha rosa separa do bloco vinho "Seja um revendedor" */
+.rodape { background: var(--vinho); color: rgba(247, 239, 232, .88); padding: 48px 0 28px; border-top: 4px solid var(--rosa); }
+.rodape-grade { display: grid; grid-template-columns: 250px 1fr;   /* 1ª coluna do tamanho da logo (250px) */ gap: 28px 64px; align-items: start; }
 /* Logo vertical: mínimo de 250px de largura pelo Guia de Marca; respiro x abaixo dela */
 .rodape .rodape-logo { width: 250px; max-width: none; height: auto; margin: 0 0 28px; }
 .rodape .rodape-titulo {
@@ -445,20 +443,12 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   color: #fff; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700;
   margin: 0 0 14px; line-height: 1.2;
 }
-.rodape-nota { font-family: var(--f-texto); font-size: .78rem; letter-spacing: .02em; text-transform: none; font-weight: 400; color: rgba(247, 239, 232, .55); }
 .rodape p { margin: 0; font-size: .93rem; line-height: 1.75; }
 
 /* Todas as linhas do rodapé com a mesma altura, para alinhar entre colunas */
-.rodape-endereco, .rodape-lista { font-style: normal; font-size: .93rem; line-height: 1.75; margin: 0; }
-.rodape-endereco { display: flex; flex-direction: column; align-items: flex-start; }
-.rodape-lista { display: grid; grid-template-columns: 5.75rem minmax(0, 1fr); align-items: baseline; }
-.rodape-lista dt { font-size: .82rem; color: rgba(247, 239, 232, .55); }
-.rodape-lista dd { margin: 0; min-width: 0; }
-/* Celular: área de toque maior nos telefones e e-mails do rodapé */
-@media (max-width: 760px) {
-  .rodape-lista { line-height: 1.45; }
-  .rodape-lista dd a, .rodape-endereco a { display: inline-block; padding-block: 6px; }
-}
+.rodape-endereco { font-style: normal; font-size: .93rem; line-height: 1.75; margin: 0; display: flex; flex-direction: column; align-items: flex-start; }
+/* Celular: área de toque maior nos links do rodapé */
+@media (max-width: 760px) { .rodape-endereco a { display: inline-block; padding-block: 6px; } }
 
 /* Links: sublinhado discreto, que fica forte ao passar o mouse */
 .rodape a {
@@ -466,11 +456,10 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   text-decoration-color: rgba(247, 239, 232, .3); overflow-wrap: anywhere; transition: text-decoration-color .2s, color .2s;
 }
 .rodape a:hover { text-decoration-color: var(--rosa); }
-.rodape-fim { margin-top: 28px; padding-top: 16px; border-top: 1px solid rgba(247, 239, 232, .12); font-size: .82rem; opacity: .7; }
-@media (max-width: 1100px) { .rodape-grade { grid-template-columns: 1fr 1fr; } }
+.rodape-fim { margin-top: 28px; padding-top: 16px; border-top: 1px solid rgba(206, 42, 78, .55); font-size: .82rem; opacity: .8; }
 @media (max-width: 600px) {
   .rodape-grade { grid-template-columns: 1fr; gap: 24px; }
-  .rodape-grade > div:first-child { text-align: center; }        /* logo e "A antiga Matoso" no meio */
+  .rodape-grade > div:first-child { text-align: center; }        /* logo no meio */
   .rodape .rodape-logo { margin-inline: auto; }
   .rodape { padding-bottom: 96px; }   /* o botão flutuante "Pedidos" não cobre o fim do rodapé */
 }
@@ -554,9 +543,10 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 
 /* ---------- Página de produtos ---------- */
 .pagina-topo { padding: calc(var(--menu-topo) + var(--menu-alt) + 32px) 0 8px; }
-.pagina-topo h1 { font-size: clamp(2.4rem, 5.2vw, 4.2rem); font-weight: 700; }
-.pagina-topo p { max-width: 52ch; color: var(--texto-suave); font-size: 1.1rem; }
-.catalogo.catalogo-pagina { margin-top: 0; border-radius: 0; box-shadow: none; padding-top: 36px; }
+.pagina-topo h1 { font-size: clamp(2.4rem, 5.2vw, 4.2rem); font-weight: 700; margin-bottom: 0; }
+.pagina-topo p { max-width: 52ch; color: var(--texto-suave); font-size: 1.1rem; margin-bottom: .4em; }
+.pagina-topo .dica { font-size: .95rem; max-width: none; }
+.catalogo.catalogo-pagina { margin-top: 0; border-radius: 0; box-shadow: none; padding-top: 36px; min-height: 0; display: block; }
 .menu-links a[aria-current="page"] { color: var(--rosa); }
 
 /* Seja revendedor */
@@ -601,7 +591,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 }
 .sem-movimento .historia { height: auto; }
 .sem-movimento .fixo { display: none; }
-.sem-movimento .catalogo { margin-top: 0; }
+.sem-movimento .catalogo { margin-top: 0; min-height: 0; display: block; }
 .sem-movimento .etapas-fixas {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px;
   list-style: none; padding: 0 0 100px; margin: 0;

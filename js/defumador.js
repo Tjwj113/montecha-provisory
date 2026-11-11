@@ -10,7 +10,9 @@
   const TOTAL = 240;
   // Celular: vídeo vertical 9:16 (540x960, pasta frames-v) e só 1 a cada 2 frames. Gasta bem menos memória.
   // A pasta frames-v só tem os arquivos ímpares (frame_0001, 0003...), que são os únicos usados com PASSO = 2.
-  // Nos frames 47 a 105 o logo do painel (inventado pela IA) foi borrado.
+  // frames (computador): vídeo novo do Gemini, mascote de uniforme branco. A logo da camisa (deformada pela IA)
+  // foi trocada pela oficial nos frames 34-59 e 91-159 (script docs/revisao-logo-animacao/fix_logo_camisa.py).
+  // frames-v (celular): ainda o vídeo antigo; a logo do avental foi trocada nos frames 31-45 / 115-143 (fix_logo.py).
   const CELULAR = innerWidth < 768;
   const PASTA = CELULAR ? 'frames-v' : 'frames';
   const PASSO = CELULAR ? 2 : 1;
@@ -61,10 +63,10 @@
     { ini: 106, fim: 142, dur: 1 },    // fumaça
     { ini: 154, fim: 239, dur: 1.7 },  // fatiadora → seladora → embalagens
   ] : [
-    { ini: 0,   fim: 34,  dur: 1 },    // mascote pendurando o bacon
-    { ini: 35,  fim: 70,  dur: 1 },    // lenha no defumador
-    { ini: 71,  fim: 106, dur: 1 },    // fumaça
-    { ini: 107, fim: 239, dur: 1.7 },  // fatiadora → embalagens (o vídeo já tem transição própria aqui)
+    { ini: 0,   fim: 47,  dur: 1 },    // mascote de uniforme branco pendurando o bacon
+    { ini: 60,  fim: 94,  dur: 1 },    // lenha no defumador
+    { ini: 106, fim: 142, dur: 1 },    // fumaça
+    { ini: 155, fim: 239, dur: 1.7 },  // fatiadora → embalagens (o vídeo já tem transição própria aqui)
   ];
   const PAUSA = 0.3;        // tempo parado no fim da cena, antes do efeito
   const TRANSICAO = 0.6;    // duração do efeito de troca de cena
