@@ -62,10 +62,11 @@ const PRODUTOS = [
     </article>`).join('');
 
   // Botão "Ver produto" (para toque e teclado; no mouse a troca é ao passar por cima)
+  // Tocar em qualquer parte da foto também troca (o texto do topo da página diz "toque na foto")
   grade.addEventListener('click', e => {
-    const botao = e.target.closest('.ver-aberto');
+    const foto = e.target.closest('.produto-foto');
+    const botao = foto && foto.querySelector('.ver-aberto');
     if (!botao) return;
-    const foto = botao.closest('.produto-foto');
     const mostrando = foto.classList.toggle('mostrar');
     botao.setAttribute('aria-pressed', mostrando);
     botao.textContent = mostrando ? 'Ver embalagem' : 'Ver produto';

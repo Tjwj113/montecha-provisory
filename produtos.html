@@ -27,7 +27,7 @@
 <!-- Fontes do Guia de Marca (KitRounded e Helvetica Neue), licenciadas pelo Adobe Fonts -->
 <link rel="preconnect" href="https://use.typekit.net" crossorigin>
 <link rel="stylesheet" href="https://use.typekit.net/pif5azx.css">
-<link rel="stylesheet" href="css/estilo.css?v=20261109c">
+<link rel="stylesheet" href="css/estilo.css?v=20261125h">
 <script>
   document.documentElement.classList.add(
     matchMedia('(prefers-reduced-motion: reduce)').matches || /[?&]sem-movimento/.test(location.search)
@@ -80,20 +80,31 @@
     </div>
   </section>
 
-  <!-- ==================== PARA QUEM VENDEMOS ==================== -->
-  <section class="para-quem secao" aria-labelledby="titulo-publico">
-    <div class="conteiner para-quem-grade">
+  <!-- ==================== POR QUE REVENDER (veio da página inicial) ==================== -->
+  <section class="secao por-que" id="por-que" aria-labelledby="titulo-porque">
+    <div class="conteiner dupla">
+      <figure class="dupla-foto revelar">
+        <img src="img/mascote-fabrica.webp" alt="Zé du Bacon na fábrica, de touca e uniforme branco com a logo da Montechã, fazendo joinha ao lado de um carrinho com peças de bacon defumado" width="1200" height="800" loading="lazy">
+      </figure>
       <div>
-        <span class="chamada">Para quem vendemos</span>
-        <h2 id="titulo-publico" class="revelar">Feito para quem revende</h2>
-        <p class="revelar">Bacon e embutidos com alto giro para a sua gôndola: em peça, fatiados e em cubos, de 200&nbsp;g a 5&nbsp;kg.</p>
+        <span class="chamada">Para o seu negócio</span>
+        <h2 id="titulo-porque" class="revelar">Por que revender Montechã</h2>
+        <ul class="motivos">
+          <li class="revelar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c-4 0-7-3-7-7 0-3 2-5 3-7 .5 2 1.5 3 3 3.5C11 7 12 4.5 14 3c0 3 5 5.5 5 11 0 4-3 7-7 7Z"/></svg>
+            <div><strong>Sabor que traz o cliente de volta</strong><p>Defumado com lenha frutífera do Sul.</p></div>
+          </li>
+          <li class="revelar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.5 6.2M3 12A9 9 0 0 1 18.5 5.8"/><path d="M18.5 2v4h-4M5.5 22v-4h4"/></svg>
+            <div><strong>Gira rápido</strong><p>Item que o seu cliente compra toda semana.</p></div>
+          </li>
+          <li class="revelar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            <div><strong>Sempre igual</strong><p>Mesmo sabor e textura em todo lote.</p></div>
+          </li>
+        </ul>
+        <a class="botao botao-principal motivos-botao" href="#revenda">Quero revender</a>
       </div>
-      <ul class="clientes">
-        <li class="revelar">Mercados</li>
-        <li class="revelar">Açougues</li>
-        <li class="revelar">Empórios</li>
-        <li class="revelar">Distribuidoras</li>
-      </ul>
     </div>
   </section>
 
@@ -146,7 +157,10 @@
         </address>
       </div>
     </div>
-    <p class="rodape-fim">© 2026 Montechã Alimentos.</p>
+    <div class="rodape-fim">
+      <p>© 2026 Montechã Alimentos.</p>
+      <p>Site feito por Prismah</p>
+    </div>
   </div>
 </footer>
 
@@ -157,6 +171,6 @@
 </a>
 
 <script src="js/site.js?v=20261109a"></script>
-<script src="js/catalogo.js?v=20261109a"></script>
+<script src="js/catalogo.js?v=20261125a"></script>
 </body>
 </html>
