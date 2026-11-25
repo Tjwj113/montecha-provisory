@@ -126,7 +126,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
    - área de respiro "x" em volta da logo = altura do "M" do símbolo = 34% da altura da logo.
      Nada (borda, link, botão) entra nesse espaço. O canto arredondado da barra
      pode ter no máximo raio x para não invadir o respiro.
-   - no celular a logo inteira não cabe: entra só o símbolo, que o guia permite usar sozinho.
+   - no celular também entra a logo inteira (símbolo + nome), a pedido do cliente em 2026-11-25.
    Em 2026-11-25, a pedido do cliente, a barra ficou com metade da altura e depois +10%: a logo passou
    a 47px de altura (≈204px de largura), abaixo do mínimo de 370px do guia. Para voltar ao guia: --logo-h: 86px. */
 :root {
@@ -135,7 +135,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   --menu-topo: 8px;                        /* distância da barra até o topo da tela */
   --menu-alt: calc(var(--logo-h) + 2 * var(--logo-x));   /* altura da barra */
 }
-@media (max-width: 600px) { :root { --logo-h: 40px; } }
+@media (max-width: 600px) { :root { --logo-h: 36px; } }
 
 /* No topo da página a barra grande rola junto com o conteúdo. Ao passar dela, desce do topo
    uma barra compacta fixa, com o símbolo (js/site.js coloca a classe .compacto). */
@@ -146,13 +146,15 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .menu.compacto {
   position: fixed; top: 0;
   /* Barra fixa com a logo inteira no tamanho mínimo do guia (370px) e o mesmo respiro x.
-     No celular (até 600px) continua só o símbolo, porque a logo inteira não cabe. */
+     No celular entra a logo inteira, um pouco menor (--logo-h de 36px). */
   --logo-x: calc(var(--logo-h) * .35);
   pointer-events: auto;
   background: rgba(247, 239, 232, .96);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   box-shadow: 0 6px 24px -12px rgba(30, 21, 23, .45);
-  animation: menu-descer .3s ease both;
+  /* Sem "both": depois de descer, a animação sai de cena. Se o transform continuasse aplicado,
+     a gaveta do celular (position: fixed) ficaria presa e cortada dentro da barra. */
+  animation: menu-descer .3s ease;
 }
 .menu.compacto .menu-barra { background: none; box-shadow: none; border-radius: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
 @keyframes menu-descer { from { transform: translateY(-100%); } to { transform: none; } }
@@ -170,10 +172,6 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .menu-logo { display: block; flex: none; margin-right: var(--logo-x); border-radius: 8px; }
 .menu-logo img { display: block; height: var(--logo-h); width: auto; }
 .menu-logo .logo-simbolo { display: none; }
-@media (max-width: 600px) {
-  .menu-logo .logo-inteira { display: none; }
-  .menu-logo .logo-simbolo { display: block; }
-}
 .menu-links { display: flex; align-items: center; gap: 22px; margin-left: auto; list-style: none; padding: 0; margin-block: 0; }
 .menu-links a { text-decoration: none; font-weight: 700; color: var(--vinho); font-size: .99rem; }
 .menu-links a:hover { color: var(--rosa); }
@@ -185,12 +183,12 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .menu-abrir {
   display: none; flex: none; width: 44px; height: 44px; border-radius: 50%;
   flex-direction: column; align-items: center; justify-content: center; gap: 5px;
-  background: transparent; border: 2px solid rgba(107, 38, 59, .25); cursor: pointer; padding: 0;
+  background: transparent; border: 0; cursor: pointer; padding: 0;   /* só os 3 tracinhos, sem círculo (pedido do cliente) */
 }
-.menu-abrir span { display: block; width: 18px; height: 2px; border-radius: 2px; background: var(--vinho); transition: transform .25s, opacity .2s; }
-.menu.aberto .menu-abrir span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-abrir span { display: block; width: 22px; height: 2.5px; border-radius: 2px; background: var(--vinho); transition: transform .25s, opacity .2s; }
+.menu.aberto .menu-abrir span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
 .menu.aberto .menu-abrir span:nth-child(2) { opacity: 0; }
-.menu.aberto .menu-abrir span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.menu.aberto .menu-abrir span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
 /* Abaixo de 1100px a logo de 370px + links não cabem: links vão para o botão de menu */
 @media (max-width: 1100px) {
@@ -198,18 +196,41 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   .menu .menu-destaque { display: none; }      /* no celular, só o ícone de menu */
   .menu-links .so-celular { display: block; }
   .menu-abrir { display: inline-flex; margin-left: auto; }
-  /* As opções descem num cartão abaixo da barra */
+  /* As opções abrem numa gaveta que entra pela direita (estilo "drawer"), com um véu escuro atrás.
+     O desfoque da barra sai aqui: com ele, a gaveta (position: fixed) ficaria presa dentro da barra. */
+  .menu-barra, .menu.compacto { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .menu-barra { background: rgba(247, 239, 232, .98); }
+  .menu.compacto { background: rgba(247, 239, 232, .99); }
+  .menu-abrir { position: relative; z-index: 2; }   /* o "X" fica por cima da gaveta */
   .menu-links {
-    position: absolute; top: calc(100% + 8px); left: 0; right: 0; margin: 0;
-    flex-direction: column; gap: 2px; padding: 8px;
-    background: var(--creme); border: 2px solid var(--rosa); border-radius: 24px;
-    box-shadow: 0 18px 40px -14px rgba(30, 21, 23, .45);
-    opacity: 0; visibility: hidden; transform: translateY(-8px);
-    transition: opacity .2s, transform .25s, visibility .25s;
+    position: fixed; top: 0; right: 0; bottom: 0; left: auto; z-index: 1; margin: 0;
+    width: min(80vw, 300px);
+    flex-direction: column; align-items: stretch; gap: 2px;
+    padding: calc(var(--menu-topo) + var(--menu-alt) + 12px) 14px 24px;
+    background: var(--creme); border-left: 2px solid var(--rosa); border-radius: 24px 0 0 24px;
+    box-shadow: -18px 0 40px -14px rgba(30, 21, 23, .45);
+    overflow-y: auto; overscroll-behavior: contain;
+    visibility: hidden; transform: translateX(100%);
+    transition: transform .32s cubic-bezier(.2, .8, .2, 1), visibility .32s;
   }
-  .menu.aberto .menu-links { opacity: 1; visibility: visible; transform: none; }
-  .menu-links a { display: block; padding: 14px 16px; font-size: 1.08rem; border-radius: 16px; }
+  .menu.aberto .menu-links { visibility: visible; transform: none; }
+  .menu::before {
+    content: ""; position: fixed; inset: 0; background: rgba(30, 21, 23, .4);
+    opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s;
+  }
+  .menu::before { z-index: 1; }   /* o véu cobre também a barra com a logo; gaveta e "X" ficam por cima */
+  .menu.aberto::before { opacity: 1; visibility: visible; pointer-events: auto; }   /* tocar no véu fecha (js/site.js) */
+  html:has(.menu.aberto) { overflow: hidden; }   /* a página não rola por trás da gaveta */
+  html:has(.menu.aberto) .whats-flutuante { opacity: 0; visibility: hidden; }   /* botão "Pedidos" some com a gaveta aberta */
+  /* --kit-desce: a KitRounded fica alta na caixa; mais espaço em cima e menos embaixo centraliza o texto (igual aos botões) */
+  .menu-links a { display: block; padding: calc(11px + var(--kit-desce)) 14px calc(11px - var(--kit-desce)); font-size: 1.08rem; border-radius: 14px; text-align: center; }
   .menu-links a:hover { background: rgba(206, 42, 78, .08); }
+  /* "Produtos" em destaque, como o botão vinho do computador, ocupando a largura toda da gaveta */
+  .menu-links .so-celular a { background: var(--vinho); color: #fff; margin-bottom: 6px; padding-block: calc(13px + var(--kit-desce)) calc(13px - var(--kit-desce)); }
+  .menu-links .so-celular a:hover { background: var(--rosa); color: #fff; }
+}
+@media (max-width: 1100px) and (prefers-reduced-motion: reduce) {
+  .menu-links, .menu::before { transition: none; }
 }
 
 /* ---------- 1. Topo ---------- */

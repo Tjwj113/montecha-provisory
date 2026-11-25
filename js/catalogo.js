@@ -57,7 +57,7 @@ const PRODUTOS = [
         <h3>${p.nome}</h3>
         <p class="produto-desc">${p.desc}</p>
         <ul class="formatos" aria-label="Formatos disponíveis">${p.formatos.map(f => `<li>${f}</li>`).join('')}</ul>
-        <a class="botao botao-vinho" data-whats="Olá! Vim pelo site e quero a tabela do produto ${p.nome}." href="https://wa.me/${CONFIG.vendedores[0].numero}" target="_blank" rel="noopener">Pedir este produto</a>
+        <a class="botao botao-vinho" data-produto="${p.nome}" data-whats="Olá! Vim pelo site e quero a tabela do produto ${p.nome}." href="https://wa.me/${CONFIG.vendedores[0].numero}" target="_blank" rel="noopener">Pedir este produto</a>
       </div>
     </article>`).join('');
 

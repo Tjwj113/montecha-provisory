@@ -7,8 +7,14 @@
 const CONFIG = {
   // Equipe de vendas (WhatsApp e ligação). Número: DDI + DDD + número, só algarismos.
   vendedores: [
-    { nome: 'Mayara',  papel: 'Vendas',           numero: '5537999243262', telefone: '(37) 9 9924-3262' },
-    { nome: 'Clayton', papel: 'Gerente Comercial', numero: '5537991690232', telefone: '(37) 9 9169-0232' },
+    // "mensagem": texto que já vem escrito no WhatsApp quando a pessoa escolhe esse vendedor.
+    // "mensagemProduto": o mesmo, vindo do botão "Pedir este produto" ({produto} vira o nome do produto).
+    { nome: 'Mayara',  papel: 'Vendas',           numero: '5537999243262', telefone: '(37) 9 9924-3262',
+      mensagem: 'Olá, Mayara! Vim pelo site e quero fazer um pedido.',
+      mensagemProduto: 'Olá, Mayara! Vim pelo site e quero fazer um pedido de {produto}.' },
+    { nome: 'Clayton', papel: 'Gerente Comercial', numero: '5537991690232', telefone: '(37) 9 9169-0232',
+      mensagem: 'Olá, Clayton! Vim pelo site e quero ser revendedor Montechã.',
+      mensagemProduto: 'Olá, Clayton! Vim pelo site e quero revender Montechã, começando por {produto}.' },
   ],
   // Nome do mascote. Vazio = os textos aparecem sem nome.
   nomeMascote: 'Zé du Bacon',
@@ -108,9 +114,12 @@ function atualizarFlutuante() {
 
 function abrirEscolha(mensagem, origem, peloTeclado = false) {
   origemEscolha = origem;
+  const produto = origem && origem.dataset.produto;
   escolha.querySelectorAll('[data-escolha]').forEach(a => {
     const v = CONFIG.vendedores[+a.dataset.escolha];
-    a.href = linkWhats(mensagem, v);
+    // Cada vendedor tem a sua mensagem (Mayara: pedido; Clayton: revenda). Sem ela, usa a do botão.
+    const texto = produto && v.mensagemProduto ? v.mensagemProduto.replace('{produto}', produto) : (v.mensagem || mensagem);
+    a.href = linkWhats(texto, v);
     a.setAttribute('aria-label', `Chamar ${v.nome} no WhatsApp: ${v.telefone}`);
   });
   escolha.hidden = false;
