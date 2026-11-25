@@ -44,6 +44,18 @@ if (CONFIG.nomeMascote) {
   document.querySelectorAll('[data-so-com-nome]').forEach(el => { el.hidden = false; });
 }
 
+// ---- Logo: volta ao topo de uma vez ----
+// A rolagem suave atravessava a animação do defumador (milhares de pixels) e, no celular, costumava parar no meio dela.
+// Na página inicial o clique na logo pula direto para o topo e tira o "#..." do endereço.
+const logoTopo = document.querySelector('.menu-logo[href="#topo"]');
+if (logoTopo) {
+  logoTopo.addEventListener('click', e => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    history.replaceState(null, '', location.pathname + location.search);
+  });
+}
+
 // ---- Menu de três risquinhos (telas menores) ----
 const menu = document.querySelector('.menu');
 const menuAbrir = document.querySelector('.menu-abrir');
